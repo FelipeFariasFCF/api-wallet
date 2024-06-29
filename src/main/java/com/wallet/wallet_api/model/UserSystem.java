@@ -1,5 +1,6 @@
-package com.wallet.wallet_api.model.user;
+package com.wallet.wallet_api.model;
 
+import com.wallet.wallet_api.dto.UserSystemDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

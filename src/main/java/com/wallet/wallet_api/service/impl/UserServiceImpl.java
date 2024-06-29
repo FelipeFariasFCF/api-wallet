@@ -4,7 +4,7 @@ import com.wallet.wallet_api.config.security.AccessToken;
 import com.wallet.wallet_api.config.security.JwtService;
 import com.wallet.wallet_api.config.exception.DuplicatedTupleException;
 import com.wallet.wallet_api.config.exception.UnauthorizedException;
-import com.wallet.wallet_api.model.user.UserSystem;
+import com.wallet.wallet_api.model.UserSystem;
 import com.wallet.wallet_api.repository.UserRepository;
 import com.wallet.wallet_api.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         if (matches) {
             return jwtService.generateAccessToken(user);
         }
-        throw new UnauthorizedException("Unauthorized access!");
+        throw new UnauthorizedException("Unable to find an account that matches what you entered!");
     }
 
     private void encodePassword(UserSystem user) {

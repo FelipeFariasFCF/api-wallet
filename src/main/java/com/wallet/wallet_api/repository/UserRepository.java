@@ -1,6 +1,6 @@
 package com.wallet.wallet_api.repository;
 
-import com.wallet.wallet_api.model.user.UserSystem;
+import com.wallet.wallet_api.model.UserSystem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

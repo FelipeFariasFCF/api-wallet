@@ -1,6 +1,6 @@
 package com.wallet.wallet_api.config.security;
 
-import com.wallet.wallet_api.model.user.UserSystem;
+import com.wallet.wallet_api.model.UserSystem;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
