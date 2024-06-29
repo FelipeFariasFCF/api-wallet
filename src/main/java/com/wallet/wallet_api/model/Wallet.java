@@ -1,6 +1,7 @@
 package com.wallet.wallet_api.model;
 
 import com.wallet.wallet_api.dto.WalletRequestDTO;
+import com.wallet.wallet_api.model.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,5 +39,13 @@ public class Wallet {
         this.initialDate = walletRequestDTO.initialDate();
         this.finishDate = walletRequestDTO.finishDate();
         this.userSystem = user;
+    }
+
+    public void updateWalletBalance(TransactionType type, double amount) {
+        if (type.equals(TransactionType.DEBIT)) {
+            this.setTotal(this.getTotal() - amount);
+        } else if (type.equals(TransactionType.CREDIT)) {
+            this.setTotal(this.getTotal() + amount);
+        }
     }
 }
