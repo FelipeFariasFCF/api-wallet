@@ -10,6 +10,8 @@ import com.wallet.wallet_api.service.TransactionService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -26,5 +28,10 @@ public class TransactionServiceImpl implements TransactionService {
         wallet.updateWalletBalance(TransactionType.valueOf(dto.type()), dto.value());
         Transaction transaction = new Transaction(dto, wallet);
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public Page<Transaction> getTransactionsByWallet(Pageable pageable, String walletId) {
+        return transactionRepository.getTransactionByWallet_Id(pageable, walletId);
     }
 }
