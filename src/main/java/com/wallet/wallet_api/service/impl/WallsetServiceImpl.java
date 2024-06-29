@@ -38,4 +38,9 @@ public class WallsetServiceImpl implements WalletService {
         Wallet wallet = walletRepository.findById(walletId).orElseThrow(() -> new EntityNotFoundException("Wallet not found!"));
         return new WalletDetailsResponseDTO(wallet);
     }
+
+    @Override
+    public void deleteWallet(String walletId) {
+        walletRepository.deleteById(walletId);
+    }
 }

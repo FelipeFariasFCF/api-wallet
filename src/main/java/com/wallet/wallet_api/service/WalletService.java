@@ -9,6 +9,10 @@ import org.springframework.data.domain.Pageable;
 public interface WalletService {
 
     Wallet createWallet(WalletRequestDTO dto);
+
     Page<Wallet> getWalletsByUser(Pageable pageable, String userId);
+
     WalletDetailsResponseDTO getWallet(String walletId);
+
+    void deleteWallet(String walletId);
 }

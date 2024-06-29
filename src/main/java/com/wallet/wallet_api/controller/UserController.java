@@ -8,10 +8,7 @@ import com.wallet.wallet_api.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -34,5 +31,11 @@ public class UserController {
     public ResponseEntity<AccessToken> authenticate(@RequestBody @Valid LoginDTO dto) {
         AccessToken token = userService.authenticate(dto.email(), dto.password());
         return ResponseEntity.ok(token);
+    }
+
+    @DeleteMapping("/{idUser}")
+    public ResponseEntity<Void> delete(@PathVariable String idUser) {
+        userService.deleteUser(idUser);
+        return ResponseEntity.noContent().build();
     }
 }

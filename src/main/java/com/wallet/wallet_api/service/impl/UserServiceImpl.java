@@ -8,6 +8,7 @@ import com.wallet.wallet_api.model.UserSystem;
 import com.wallet.wallet_api.repository.UserRepository;
 import com.wallet.wallet_api.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,12 @@ public class UserServiceImpl implements UserService {
             return jwtService.generateAccessToken(user);
         }
         throw new UnauthorizedException("Unable to find an account that matches what you entered!");
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(String idUser) {
+        userRepository.deleteById(idUser);
     }
 
     private void encodePassword(UserSystem user) {

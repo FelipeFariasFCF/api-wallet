@@ -5,5 +5,8 @@ import com.wallet.wallet_api.model.UserSystem;
 
 public interface UserService {
     UserSystem save(UserSystem user);
+
     AccessToken authenticate(String email, String password);
+
+    void deleteUser(String idUser);
 }

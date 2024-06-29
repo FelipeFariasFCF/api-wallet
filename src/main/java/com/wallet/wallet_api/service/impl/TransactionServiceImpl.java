@@ -34,4 +34,9 @@ public class TransactionServiceImpl implements TransactionService {
     public Page<Transaction> getTransactionsByWallet(Pageable pageable, String walletId) {
         return transactionRepository.getTransactionByWallet_Id(pageable, walletId);
     }
+
+    @Override
+    public void deleteTransaction(String idTransaction) {
+        transactionRepository.deleteById(idTransaction);
+    }
 }

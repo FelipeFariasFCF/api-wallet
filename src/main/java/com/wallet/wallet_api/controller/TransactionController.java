@@ -32,4 +32,10 @@ public class TransactionController {
     ResponseEntity<Page<TransactionDetailsResponseDTO>> getByTransactionId(@PathVariable String walletId, Pageable pageable) {
         return ResponseEntity.ok().body(transactionService.getTransactionsByWallet(pageable, walletId).map(TransactionDetailsResponseDTO::new));
     }
+
+    @DeleteMapping("/{transactionId}")
+    ResponseEntity<Void> delete(@PathVariable String transactionId) {
+        transactionService.deleteTransaction(transactionId);
+        return ResponseEntity.noContent().build();
+    }
 }

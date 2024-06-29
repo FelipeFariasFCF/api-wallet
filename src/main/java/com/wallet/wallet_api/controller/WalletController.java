@@ -38,4 +38,10 @@ public class WalletController {
     public ResponseEntity<WalletDetailsResponseDTO> getByWalletId(@PathVariable String walletId) {
         return ResponseEntity.ok().body(walletService.getWallet(walletId));
     }
+
+    @DeleteMapping("/{walletId}")
+    public ResponseEntity<Void> delete(@PathVariable String walletId) {
+        walletService.deleteWallet(walletId);
+        return ResponseEntity.noContent().build();
+    }
 }

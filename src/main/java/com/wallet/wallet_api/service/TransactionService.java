@@ -9,4 +9,6 @@ public interface TransactionService {
     Transaction createTransaction(TransactionRequestDTO dto);
 
     Page<Transaction> getTransactionsByWallet(Pageable pageable, String walletId);
+
+    void deleteTransaction(String idTransaction);
 }
