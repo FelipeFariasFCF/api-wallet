@@ -2,19 +2,17 @@ package com.wallet.wallet_api.model;
 
 import com.wallet.wallet_api.dto.UserSystemDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -30,7 +28,10 @@ public class UserSystem {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public UserSystem (UserSystemDTO dto) {
+    @OneToMany(mappedBy = "userSystem", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Wallet> wallets;
+
+    public UserSystem(UserSystemDTO dto) {
         this.name = dto.name();
         this.email = dto.email();
         this.password = dto.password();
