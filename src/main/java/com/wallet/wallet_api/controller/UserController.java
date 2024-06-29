@@ -3,7 +3,7 @@ package com.wallet.wallet_api.controller;
 import com.wallet.wallet_api.config.security.AccessToken;
 import com.wallet.wallet_api.dto.LoginDTO;
 import com.wallet.wallet_api.model.UserSystem;
-import com.wallet.wallet_api.dto.UserSystemDTO;
+import com.wallet.wallet_api.dto.UserSystemRequestDTO;
 import com.wallet.wallet_api.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody @Valid UserSystemDTO dto, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> save(@RequestBody @Valid UserSystemRequestDTO dto, UriComponentsBuilder uriComponentsBuilder) {
         UserSystem user = userService.save(new UserSystem(dto));
         URI uri = uriComponentsBuilder.path("/v1/users/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).build();

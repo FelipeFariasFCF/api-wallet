@@ -1,5 +1,6 @@
 package com.wallet.wallet_api.model;
 
+import com.wallet.wallet_api.dto.WalletRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,4 +32,11 @@ public class Wallet {
 
     @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactions;
+
+    public Wallet(WalletRequestDTO walletRequestDTO, UserSystem user) {
+        this.name = walletRequestDTO.name();
+        this.initialDate = walletRequestDTO.initialDate();
+        this.finishDate = walletRequestDTO.finishDate();
+        this.userSystem = user;
+    }
 }

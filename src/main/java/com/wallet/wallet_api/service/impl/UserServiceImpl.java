@@ -21,11 +21,6 @@ public class UserServiceImpl implements UserService {
     private final JwtService jwtService;
 
     @Override
-    public UserSystem getByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    @Override
     public UserSystem save(UserSystem user) {
         boolean exists = userRepository.existsByEmail(user.getEmail());
         if (exists) {
@@ -37,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AccessToken authenticate(String email, String password) {
-        UserSystem user = userRepository.getByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found!"));
+        UserSystem user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found!"));
         boolean matches = passwordEncoder.matches(password, user.getPassword());
         if (matches) {
             return jwtService.generateAccessToken(user);

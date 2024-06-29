@@ -1,6 +1,6 @@
 package com.wallet.wallet_api.model;
 
-import com.wallet.wallet_api.dto.UserSystemDTO;
+import com.wallet.wallet_api.dto.UserSystemRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,7 +31,7 @@ public class UserSystem {
     @OneToMany(mappedBy = "userSystem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wallet> wallets;
 
-    public UserSystem(UserSystemDTO dto) {
+    public UserSystem(UserSystemRequestDTO dto) {
         this.name = dto.name();
         this.email = dto.email();
         this.password = dto.password();
