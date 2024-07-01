@@ -1,6 +1,8 @@
 package com.wallet.wallet_api.config.security;
 
+import com.wallet.wallet_api.config.exception.InvalidTokenException;
 import com.wallet.wallet_api.model.UserSystem;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,5 +45,18 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("name", user.getName());
         return claims;
+    }
+
+    public String getEmailFromToken(String tokenJWT) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(keyGenerator.getKey())
+                    .build()
+                    .parseSignedClaims(tokenJWT)
+                    .getPayload()
+                    .getSubject();
+        } catch (JwtException e) {
+            throw new InvalidTokenException(e.getMessage());
+        }
     }
 }
