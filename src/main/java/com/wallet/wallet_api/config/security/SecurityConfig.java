@@ -3,6 +3,7 @@ package com.wallet.wallet_api.config.security;
 import com.wallet.wallet_api.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -34,7 +35,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configure(http))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/v1/users/auth", "v1/users").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/v1/users/auth").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/v1/users").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
