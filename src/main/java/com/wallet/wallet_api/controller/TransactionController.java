@@ -2,7 +2,6 @@ package com.wallet.wallet_api.controller;
 
 import com.wallet.wallet_api.dto.TransactionDetailsResponseDTO;
 import com.wallet.wallet_api.dto.TransactionRequestDTO;
-import com.wallet.wallet_api.model.Transaction;
 import com.wallet.wallet_api.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +22,14 @@ public class TransactionController {
 
     @PostMapping
     ResponseEntity<Void> save(@RequestBody @Valid TransactionRequestDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        Transaction transaction = transactionService.createTransaction(dto);
-        URI uri = uriComponentsBuilder.path("/v1/wallets/{id}").buildAndExpand(transaction.getId()).toUri();
+        String transactionId = transactionService.createTransaction(dto);
+        URI uri = uriComponentsBuilder.path("/v1/wallets/{id}").buildAndExpand(transactionId).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/by-wallet/{walletId}")
     ResponseEntity<Page<TransactionDetailsResponseDTO>> getByTransactionId(@PathVariable String walletId, Pageable pageable) {
-        return ResponseEntity.ok().body(transactionService.getTransactionsByWallet(pageable, walletId).map(TransactionDetailsResponseDTO::new));
+        return ResponseEntity.ok().body(transactionService.getTransactionsByWallet(pageable, walletId));
     }
 
     @DeleteMapping("/{transactionId}")

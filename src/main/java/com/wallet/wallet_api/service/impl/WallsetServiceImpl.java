@@ -22,15 +22,16 @@ public class WallsetServiceImpl implements WalletService {
     private final UserRepository userRepository;
 
     @Override
-    public Wallet createWallet(WalletRequestDTO dto) {
+    public String createWallet(WalletRequestDTO dto) {
         UserSystem user = userRepository.findById(dto.userId()).orElseThrow(() -> new EntityNotFoundException("User not found!"));
         Wallet wallet = new Wallet(dto, user);
-        return walletRepository.save(wallet);
+        Wallet saved = walletRepository.save(wallet);
+        return saved.getId();
     }
 
     @Override
-    public Page<Wallet> getWalletsByUser(Pageable pageable, String userId) {
-        return walletRepository.findAllByUserSystem_IdOrderByInitialDate(pageable, userId);
+    public Page<WalletResponseDTO> getWalletsByUser(Pageable pageable, String userId) {
+        return walletRepository.findAllByUserSystem_IdOrderByInitialDate(pageable, userId).map(WalletResponseDTO::new);
     }
 
     @Override

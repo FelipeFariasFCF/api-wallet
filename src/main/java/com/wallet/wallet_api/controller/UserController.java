@@ -22,8 +22,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody @Valid UserSystemRequestDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        UserSystem user = userService.save(new UserSystem(dto));
-        URI uri = uriComponentsBuilder.path("/v1/users/{id}").buildAndExpand(user.getId()).toUri();
+        String userId = userService.createUser(new UserSystem(dto));
+        URI uri = uriComponentsBuilder.path("/v1/users/{id}").buildAndExpand(userId).toUri();
         return ResponseEntity.created(uri).build();
     }
 

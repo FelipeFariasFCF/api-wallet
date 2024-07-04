@@ -3,7 +3,6 @@ package com.wallet.wallet_api.controller;
 import com.wallet.wallet_api.dto.WalletDetailsResponseDTO;
 import com.wallet.wallet_api.dto.WalletRequestDTO;
 import com.wallet.wallet_api.dto.WalletResponseDTO;
-import com.wallet.wallet_api.model.Wallet;
 import com.wallet.wallet_api.service.WalletService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +23,14 @@ public class WalletController {
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody @Valid WalletRequestDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        Wallet wallet = walletService.createWallet(dto);
-        URI uri = uriComponentsBuilder.path("/v1/wallets/{id}").buildAndExpand(wallet.getId()).toUri();
+        String walletId = walletService.createWallet(dto);
+        URI uri = uriComponentsBuilder.path("/v1/wallets/{id}").buildAndExpand(walletId).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/by-user/{userId}")
     public ResponseEntity<Page<WalletResponseDTO>> getAllByUserId(@PathVariable String userId, Pageable pageable) {
-        return ResponseEntity.ok().body(walletService.getWalletsByUser(pageable, userId).map(WalletResponseDTO::new));
+        return ResponseEntity.ok().body(walletService.getWalletsByUser(pageable, userId));
     }
 
     @GetMapping("/{walletId}")

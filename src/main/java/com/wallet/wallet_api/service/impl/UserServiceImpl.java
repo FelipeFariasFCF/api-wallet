@@ -27,13 +27,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSystem save(UserSystem user) {
+    public String createUser(UserSystem user) {
         boolean exists = userRepository.existsByEmail(user.getEmail());
         if (exists) {
             throw new DuplicatedTupleException("User already exists!");
         }
         encodePassword(user);
-        return userRepository.save(user);
+        UserSystem saved = userRepository.save(user);
+        return saved.getId();
     }
 
     @Override

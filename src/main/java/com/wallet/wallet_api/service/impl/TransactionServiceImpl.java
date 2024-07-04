@@ -1,5 +1,6 @@
 package com.wallet.wallet_api.service.impl;
 
+import com.wallet.wallet_api.dto.TransactionDetailsResponseDTO;
 import com.wallet.wallet_api.dto.TransactionRequestDTO;
 import com.wallet.wallet_api.model.Transaction;
 import com.wallet.wallet_api.model.Wallet;
@@ -23,16 +24,17 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction createTransaction(TransactionRequestDTO dto) {
+    public String createTransaction(TransactionRequestDTO dto) {
         Wallet wallet = walletRepository.findById(dto.walletId()).orElseThrow(() -> new EntityNotFoundException("Wallet not found!"));
         wallet.updateWalletBalance(TransactionType.valueOf(dto.type()), dto.value());
         Transaction transaction = new Transaction(dto, wallet);
-        return transactionRepository.save(transaction);
+        Transaction saved = transactionRepository.save(transaction);
+        return saved.getId();
     }
 
     @Override
-    public Page<Transaction> getTransactionsByWallet(Pageable pageable, String walletId) {
-        return transactionRepository.getTransactionByWallet_Id(pageable, walletId);
+    public Page<TransactionDetailsResponseDTO> getTransactionsByWallet(Pageable pageable, String walletId) {
+        return transactionRepository.getTransactionByWallet_Id(pageable, walletId).map(TransactionDetailsResponseDTO::new);
     }
 
     @Override
